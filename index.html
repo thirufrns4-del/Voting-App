@@ -66,7 +66,7 @@ async function loadResults() {
 }
 
 async function vote(party) {
-  await fetch("http://localhost:3000/vote", {
+  await fetch("https://voting-app-api-lnrk.onrender.com/vote", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ party })
