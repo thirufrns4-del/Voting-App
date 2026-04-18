@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Voting App</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f7fb;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: auto;
+    }
+    .party {
+      margin: 10px 0;
+    }
+    .bar {
+      height: 10px;
+      background: #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .fill {
+      height: 100%;
+      background: #4a6cf7;
+    }
+    button {
+      margin-top: 5px;
+      padding: 5px 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>Voting Results</h2>
+  <div id="results"></div>
+</div>
+
+<script>
+async function loadResults() {
+  const res = await fetch("http://localhost:3000/results");
+  const data = await res.json();
+
+  const total = Object.values(data).reduce((a, b) => a + b, 0);
+  const container = document.getElementById("results");
+  container.innerHTML = "";
+
+  for (let party in data) {
+    let percent = ((data[party] / total) * 100).toFixed(1);
+
+    container.innerHTML += `
+      <div class="party">
+        <b>${party}</b> - ${data[party]} votes (${percent}%)
+        <div class="bar">
+          <div class="fill" style="width:${percent}%"></div>
+        </div>
+        <button onclick="vote('${party}')">Vote</button>
+      </div>
+    `;
+  }
+}
+
+async function vote(party) {
+  await fetch("http://localhost:3000/vote", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ party })
+  });
+
+  loadResults();
+}
+
+loadResults();
+</script>
+
+</body>
+</html>
