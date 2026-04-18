@@ -43,7 +43,7 @@
 
 <script>
 async function loadResults() {
-  const res = await fetch("https://voting-app-api-lnrk.onrender.com");
+  const res = await fetch("https://voting-app-6g7a.onrender.com");
   const data = await res.json();
 
   const total = Object.values(data).reduce((a, b) => a + b, 0);
@@ -66,7 +66,7 @@ async function loadResults() {
 }
 
 async function vote(party) {
-  await fetch("https://voting-app-api-lnrk.onrender.com/vote", {
+  await fetch("https://voting-app-6g7a.onrender.com/vote", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ party })
