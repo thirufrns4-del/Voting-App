@@ -43,7 +43,7 @@
 
 <script>
 async function loadResults() {
-  const res = await fetch("http://localhost:3000/results");
+  const res = await fetch("https://voting-app-api-lnrk.onrender.com");
   const data = await res.json();
 
   const total = Object.values(data).reduce((a, b) => a + b, 0);
